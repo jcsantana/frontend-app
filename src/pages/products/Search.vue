@@ -21,8 +21,9 @@
         <q-header :class="$q.dark.isActive ? ' bg-brand' : ' bg-white'">
           <q-toolbar :class="$q.dark.isActive ? 'bg-brand' : 'bg-white text-black'">
             <q-btn @click="$router.go(-1)" flat round dense icon="arrow_back_ios" />
-            <q-toolbar-title class="title q-pl-none" style="text-align: center">PESQUISAR PRODUTOS</q-toolbar-title>
+            <q-toolbar-title class="title q-pl-none">PESQUISAR PRODUTOS</q-toolbar-title>
           </q-toolbar>
+          <hr style="border: 0; height: 0.9px; background: #d0d0d0" class="q-mt-none" />
           <q-input
             @keyup="GET_LIST_PRODUCTS(1)"
             :label="$t('searchProduct.input_search_product')"
@@ -36,10 +37,10 @@
 
         <q-page-container>
           <q-page>
-            <q-card flat class="my-card q-mt-xs">
+            <q-card flat class="my-card q-mt-sm">
               <q-list separator>
                 <q-linear-progress v-show="loading" size="1px" indeterminate />
-                <q-separator />
+
                 <q-item :to="{ name: 'product-id', params: { id: n.id } }" v-for="n in dataProducts" v-bind:key="n" clickable v-ripple>
                   <q-item-section>
                     <q-item-label>{{ n.name }}</q-item-label>

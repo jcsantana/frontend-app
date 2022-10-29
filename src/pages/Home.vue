@@ -66,7 +66,24 @@
             <q-drawer class="bg-grey-2" show-if-above v-model="leftDrawerOpen" side="left">
               <componentMenu />
             </q-drawer>
-
+            <div v-if="inventoryState" class="row q-ma-xs q-pt-md q-col-gutter-xs text-center">
+              <div class="col-6">
+                <q-card class="my-card bg-green-7 text-white">
+                  <q-card-section>
+                    <div class="text-h6">$ PRODUTOS</div>
+                    {{ FORMAT_CURRENCY(inventoryState.value_inventory[0].total) }}
+                  </q-card-section>
+                </q-card>
+              </div>
+              <div class="col-6">
+                <q-card class="my-card bg-blue-7 text-white">
+                  <q-card-section>
+                    <div class="text-h6">ESTOQUE</div>
+                    {{ inventoryState.quantity_inventory[0].total }}
+                  </q-card-section>
+                </q-card>
+              </div>
+            </div>
             <q-card flat class="my-card">
               <q-card-section>
                 <div class="row q-mt-lg">
@@ -94,24 +111,6 @@
                 </div>
               </q-card-section>
             </q-card>
-            <div v-if="inventoryState" class="row q-ma-xs q-pt-md q-col-gutter-xs text-center">
-              <div class="col-6">
-                <q-card class="my-card bg-green-7 text-white">
-                  <q-card-section>
-                    <div class="text-h6">$ PRODUTOS</div>
-                    {{ FORMAT_CURRENCY(inventoryState.value_inventory[0].total) }}
-                  </q-card-section>
-                </q-card>
-              </div>
-              <div class="col-6">
-                <q-card class="my-card bg-blue-7 text-white">
-                  <q-card-section>
-                    <div class="text-h6">ESTOQUE</div>
-                    {{ inventoryState.quantity_inventory[0].total }}
-                  </q-card-section>
-                </q-card>
-              </div>
-            </div>
           </q-page>
           <q-footer> </q-footer>
         </q-page-container>

@@ -74,16 +74,23 @@
         <q-header :class="$q.dark.isActive ? ' bg-brand' : ' bg-white'">
           <q-toolbar :class="$q.dark.isActive ? 'bg-brand' : 'bg-white text-black'">
             <q-btn @click="this.$router.go(-1)" flat round dense icon="arrow_back_ios" />
+            <q-toolbar-title class="title">CADASTRO DE PRODUTOS</q-toolbar-title>
           </q-toolbar>
-          <q-banner inline-actions class="text-white bg-red-10 q-mb-sm">
-            Cadastro de Produtos
-            <template v-slot:action>
-              <q-btn @click="CREATE_OR_UPDATE_PRODUCT()" flat color="white" label="SALVAR" />
-              <q-btn @click="DELETE_PRODUCT()" v-show="editOrCreate" flat color="white" label="DELETAR" />
-            </template>
-          </q-banner>
+          <hr style="border: 0; height: 0.9px; background: #d0d0d0" class="q-mt-none" />
         </q-header>
+
         <q-page-container>
+          <q-banner rounded inline-actions class="text-white q-mb-sm">
+            <div class="row q-col-gutter-xs">
+              <div class="col">
+                <q-btn class="full-width" @click="CREATE_OR_UPDATE_PRODUCT()" color="green-7" label="SALVAR" />
+              </div>
+              <div v-show="editOrCreate" class="col">
+                <q-btn class="full-width" @click="DELETE_PRODUCT()" color="red-8" label="DELETAR" />
+              </div>
+            </div>
+          </q-banner>
+
           <q-page class="q-pa-sm">
             <q-inner-loading
               :showing="!loadingData"
