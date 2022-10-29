@@ -6,7 +6,6 @@
   "author": "jcsantana <jcsantana@users.noreply.github.com>",
   "private": true,
   "scripts": {
-    "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build",
     "postinstall": "quasar build -m pwa",
     "start": "node server.js",
     "lint": "eslint --ext .js,.ts,.vue ./",
