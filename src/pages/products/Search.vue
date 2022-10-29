@@ -21,18 +21,13 @@
         <q-header :class="$q.dark.isActive ? ' bg-brand' : ' bg-white'">
           <q-toolbar :class="$q.dark.isActive ? 'bg-brand' : 'bg-white text-black'">
             <q-btn @click="$router.go(-1)" flat round dense icon="arrow_back_ios" />
-            <q-toolbar-title class="title q-pl-none">PESQUISAR PRODUTOS</q-toolbar-title>
+            <q-toolbar-title style="font-size: 19px; text-align: center; padding-right: 1em" class="title q-pl-none"
+              >PESQUISAR PRODUTOS</q-toolbar-title
+            >
           </q-toolbar>
-          <hr style="border: 0; height: 0.9px; background: #d0d0d0" class="q-mt-none" />
-          <q-input
-            @keyup="GET_LIST_PRODUCTS(1)"
-            :label="$t('searchProduct.input_search_product')"
-            v-model="searchText"
-            dense
-            rounded
-            outlined
-            class="q-pa-xs bg-white text-black"
-          />
+          <q-input @keyup="GET_LIST_PRODUCTS(1)" v-model="searchText" dense rounded outlined class="q-pa-md bg-white text-black">
+            <template v-slot:append> <q-icon name="search" /> </template
+          ></q-input>
         </q-header>
 
         <q-page-container>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row bg-grey-10 text-white">
+    <div :class="`row ${props.color}`">
       <div class="colMenu col flex justify-center">
         <q-list>
           <q-item>
@@ -62,10 +62,14 @@
 import { Menu } from './menu'
 export default {
   name: 'menuComponent',
-  setup() {
+  props: {
+    color: null,
+  },
+  setup(props) {
     return {
       message: 'MENU APP',
       Menu,
+      props,
     }
   },
 }
