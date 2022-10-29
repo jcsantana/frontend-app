@@ -7,6 +7,7 @@ export default {
     register: 'CADASTRAR',
     search:   'PESQUISAR',
     logout:   'SAIR',
+    home:     'HOME',
   },
 
   searchProduct: {

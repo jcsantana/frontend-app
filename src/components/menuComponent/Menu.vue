@@ -10,6 +10,17 @@
       </div>
     </div>
     <q-list>
+      <q-item to="/" clickable v-ripple>
+        <q-item-section avatar>
+          <q-avatar>
+            <q-icon name="home" />
+          </q-avatar>
+        </q-item-section>
+
+        <q-item-section>
+          <q-item-label lines="1">{{ $t('menu.home') }}</q-item-label>
+        </q-item-section>
+      </q-item>
       <q-expansion-item
         v-for="item in Menu.links"
         v-bind:key="item.title"
@@ -32,7 +43,7 @@
           </q-item>
         </q-card>
       </q-expansion-item>
-      <q-item v-for="item in Menu.links" v-bind:key="item.title" v-show="!item.expanded" clickable v-ripple>
+      <q-item v-for="item in Menu.links" v-bind:key="item.title" :to="item.to" v-show="!item.expanded" clickable v-ripple>
         <q-item-section avatar>
           <q-avatar>
             <q-icon :name="item.icon" />
@@ -62,5 +73,8 @@ export default {
 <style>
 .colMenu {
   padding-top: 0.1rem;
+}
+.q-icon {
+  padding-right: 15px;
 }
 </style>

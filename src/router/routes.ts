@@ -11,7 +11,11 @@ const routes: RouteRecordRaw[] = [
     name: 'product',
     component: () => import('src/pages/products/Product.vue'),
   },
-
+  {
+    path: '/product/:id',
+    name: 'product-id',
+    component: () => import(/* webpackChunkName: "principio-ativo" */'src/pages/products/Product.vue'),
+  },
   {
     path: '/search-products',
     name: 'search-products',

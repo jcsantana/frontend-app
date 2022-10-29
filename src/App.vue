@@ -7,11 +7,11 @@
           <transition
             mode="out-in"
             appear
-            :enter-active-class="$q.platform.is.mobile ? 'animated slideInRight' : 'animated fadeIn'"
-            :leave-active-class="$q.platform.is.mobile ? 'animated slideOutRight' : 'animated fadeOut'"
-            duration="250"
+            :enter-active-class="$q.platform.is.mobile ? 'animated fadeInRight' : 'animated fadeIn'"
+            :leave-active-class="$q.platform.is.mobile ? 'animated fadeOutRight' : 'animated fadeOut'"
+            duration="300"
           >
-            <keep-alive>
+            <keep-alive exclude="productPage">
               <component :key="route.fullPath" :is="Component" />
             </keep-alive>
           </transition>
@@ -41,7 +41,7 @@
             :leave-active-class="$q.platform.is.mobile ? 'animated slideOutRight' : 'animated fadeOut'"
             duration="250"
           >
-            <keep-alive>
+            <keep-alive exclude="productPage">
               <component :key="route.fullPath" :is="Component" />
             </keep-alive>
           </transition>

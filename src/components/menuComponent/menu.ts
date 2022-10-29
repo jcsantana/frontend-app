@@ -1,5 +1,6 @@
 export const Menu = {
   links: [
+
     {
       title: 'menu.product',
       icon: 'ev_station',
@@ -26,7 +27,7 @@ export const Menu = {
       title: 'menu.logout',
       caption: 'github.com/quasarframework',
       icon: 'logout',
-      to: 'https://github.com/quasarframework',
+      to: '',
       expanded: false,
     },
   ]

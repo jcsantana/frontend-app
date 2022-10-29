@@ -2,8 +2,26 @@
   <div>
     <!-- Desktop -->
     <div v-if="$q.platform.is.desktop">
-      <q-page class="row items-center justify-evenly">
-        <div class="row">
+      <q-page>
+        <div v-if="inventoryState" class="row q-pa-xl q-pt-md q-col-gutter-xs text-center">
+          <div class="col-6">
+            <q-card class="my-card bg-green-7 text-white">
+              <q-card-section>
+                <div class="text-h6">$ VALOR EM PRODUTOS</div>
+                {{ FORMAT_CURRENCY(inventoryState.value_inventory[0].total) }}
+              </q-card-section>
+            </q-card>
+          </div>
+          <div class="col-6">
+            <q-card class="my-card bg-blue-7 text-white">
+              <q-card-section>
+                <div class="text-h6">TOTAL DO ESTOQUE</div>
+                {{ inventoryState.quantity_inventory[0].total }}
+              </q-card-section>
+            </q-card>
+          </div>
+        </div>
+        <div class="row q-mt-xl flex flex-center items-center">
           <div class="col-12">
             <div class="container">
               <div class="box">
@@ -48,6 +66,7 @@
             <q-drawer class="bg-grey-2" show-if-above v-model="leftDrawerOpen" side="left">
               <componentMenu />
             </q-drawer>
+
             <q-card flat class="my-card">
               <q-card-section>
                 <div class="row q-mt-lg">
@@ -75,15 +94,26 @@
                 </div>
               </q-card-section>
             </q-card>
+            <div v-if="inventoryState" class="row q-ma-xs q-pt-md q-col-gutter-xs text-center">
+              <div class="col-6">
+                <q-card class="my-card bg-green-7 text-white">
+                  <q-card-section>
+                    <div class="text-h6">$ PRODUTOS</div>
+                    {{ FORMAT_CURRENCY(inventoryState.value_inventory[0].total) }}
+                  </q-card-section>
+                </q-card>
+              </div>
+              <div class="col-6">
+                <q-card class="my-card bg-blue-7 text-white">
+                  <q-card-section>
+                    <div class="text-h6">ESTOQUE</div>
+                    {{ inventoryState.quantity_inventory[0].total }}
+                  </q-card-section>
+                </q-card>
+              </div>
+            </div>
           </q-page>
-          <q-footer>
-            <q-tabs key="tabs" v-model="tab" class="bg-red-10 text-white" align="justify" narrow-indicator>
-              <q-tab name="mails" label="Mails" />
-
-              <q-tab name="alarms" label="Alarms" />
-              <q-tab name="movies" label="Movies" />
-            </q-tabs>
-          </q-footer>
+          <q-footer> </q-footer>
         </q-page-container>
       </q-layout>
     </div>
@@ -91,7 +121,8 @@
 </template>
 <script>
 import componentMenu from 'src/components/menuComponent/Menu.vue'
-import { ref } from 'vue'
+import { ref, onMounted, onActivated } from 'vue'
+import { api } from 'boot/axios'
 export default {
   name: 'homePage',
   components: {
@@ -99,8 +130,33 @@ export default {
   },
   setup() {
     const leftDrawerOpen = ref(false)
+    const inventoryState = ref()
+    const FORMAT_CURRENCY = (val) => {
+      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val)
+    }
+    const GET_STATE_INVENTORY = () => {
+      api
+        .get('/inventory/')
+        .then((response) => {
+          inventoryState.value = response.data
+        })
+        .catch((error) => {
+          Notify.create({
+            message: error.data,
+            position: 'top',
+            color: 'red-10',
+          })
+        })
+    }
+    onMounted(() => {
+      GET_STATE_INVENTORY()
+    })
+    onActivated(() => {
+      GET_STATE_INVENTORY()
+    })
     return {
-      tab: 'mails',
+      FORMAT_CURRENCY,
+      inventoryState,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value

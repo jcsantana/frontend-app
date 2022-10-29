@@ -1,16 +1,75 @@
 <template>
   <div>
+    <!-- Mobile -->
+    <div v-if="$q.platform.is.mobile">
+      <q-layout view="lHh lpR lFf" :class="$q.dark.isActive ? 'bg-brand' : 'bg-white'">
+        <q-footer class="bg-white">
+          <q-toolbar>
+            <q-pagination
+              v-if="dataProducts"
+              @click="GET_LIST_PRODUCTS(pagination.current_page)"
+              v-model="pagination.current_page"
+              :max="pagination.last_page"
+              direction-links
+              flat
+              color="grey-10"
+              active-color="red-10"
+            />
+          </q-toolbar>
+        </q-footer>
+
+        <q-header :class="$q.dark.isActive ? ' bg-brand' : ' bg-white'">
+          <q-toolbar :class="$q.dark.isActive ? 'bg-brand' : 'bg-white text-black'">
+            <q-btn @click="$router.go(-1)" flat round dense icon="arrow_back_ios" />
+            <q-toolbar-title class="title q-pl-none" style="text-align: center">PESQUISAR PRODUTOS</q-toolbar-title>
+          </q-toolbar>
+          <q-input
+            @keyup="GET_LIST_PRODUCTS(1)"
+            :label="$t('searchProduct.input_search_product')"
+            v-model="searchText"
+            dense
+            rounded
+            outlined
+            class="q-pa-xs bg-white text-black"
+          />
+        </q-header>
+
+        <q-page-container>
+          <q-page>
+            <q-card flat class="my-card q-mt-xs">
+              <q-list separator>
+                <q-linear-progress v-show="loading" size="1px" indeterminate />
+                <q-separator />
+                <q-item :to="{ name: 'product-id', params: { id: n.id } }" v-for="n in dataProducts" v-bind:key="n" clickable v-ripple>
+                  <q-item-section>
+                    <q-item-label>{{ n.name }}</q-item-label>
+                    <q-item-label class="text-weight-medium" caption lines="2">{{ n.description }}</q-item-label>
+                  </q-item-section>
+
+                  <q-item-section side top>
+                    <q-item-label class="text-weight-medium" caption>Preço</q-item-label>
+                    <q-item-label class="text-red-10 text-weight-medium" caption>{{ FORMAT_CURRENCY(n.price) }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+
+                <q-separator />
+              </q-list>
+            </q-card>
+          </q-page>
+        </q-page-container>
+      </q-layout>
+    </div>
     <!-- Desktop -->
     <div v-if="$q.platform.is.desktop">
       <q-page class="q-pa-xl">
         <div class="row flex flex-center">
           <div class="q-mt-md col-10">
-            <q-card class="my-card">
+            <q-card class="my-card coisa">
               <div class="row">
-                <div class="col">
+                <div class="col column inline">
                   <q-card-section>
                     <q-input
-                      @keyup="getListProduct(1)"
+                      @keyup="GET_LIST_PRODUCTS(1)"
                       :label="$t('searchProduct.input_search_product')"
                       dense
                       rounded
@@ -26,18 +85,27 @@
                   </q-card-section>
                 </div>
                 <div class="col-2 flex justify-end">
-                  <q-card-section>
-                    <q-btn color="grey-10" icon="add" :label="$t('searchProduct.btn_register_product')" />
-                  </q-card-section>
+                  <q-btn v-ripple:white to="/product" flat stack>
+                    <q-icon style="color: white; background-color: black" v-ripple:white class="icons coisa" size="md" name="add" />
+                    <span class="button-tag">PRODUTOS</span></q-btn
+                  >
                 </div>
               </div>
             </q-card>
           </div>
 
           <div class="q-mt-md col-10">
-            <q-table :rows-per-page-options="[10]" hide-pagination :rows="dataProducts" :columns="columns" row-key="id">
+            <q-table
+              class="coisa"
+              :loading="loading"
+              :rows-per-page-options="[20]"
+              hide-pagination
+              :rows="dataProducts"
+              :columns="tableColumns"
+              row-key="id"
+            >
               <template v-slot:body="props">
-                <q-tr :props="props" @click="clickrow(props.row.id)">
+                <q-tr :props="props" @click="REDIRECT_PRODUCT(props.row.id)">
                   <q-td key="id" :props="props">
                     {{ props.row.id }}
                   </q-td>
@@ -45,7 +113,7 @@
                     {{ props.row.name }}
                   </q-td>
                   <q-td key="price" :props="props">
-                    {{ formatCurrency(props.row.price) }}
+                    {{ FORMAT_CURRENCY(props.row.price) }}
                   </q-td>
                   <q-td key="inventory" :props="props">
                     {{ props.row.inventory }}
@@ -55,11 +123,11 @@
             </q-table>
           </div>
           <div class="q-mt-md col-10">
-            <q-card class="my-card">
+            <q-card class="my-card coisa">
               <q-card-section>
                 <q-pagination
                   v-if="dataProducts"
-                  @click="getListProduct(pagination.current_page)"
+                  @click="GET_LIST_PRODUCTS(pagination.current_page)"
                   v-model="pagination.current_page"
                   :max="pagination.last_page"
                   direction-links
@@ -73,68 +141,53 @@
         </div>
       </q-page>
     </div>
-    <!-- Mobile -->
-    <div v-if="$q.platform.is.mobile">
-      <q-layout view="lHh lpR fFf" :class="$q.dark.isActive ? 'bg-brand' : 'bg-white'">
-        <q-header :class="$q.dark.isActive ? ' bg-brand' : ' bg-white'">
-          <q-toolbar :class="$q.dark.isActive ? 'bg-brand' : 'bg-white text-black'">
-            <q-btn @click="$router.go(-1)" flat round dense icon="arrow_back_ios" />
-
-            <!--  <div class="row">
-              <div class="col flex flex-center">
-                <span style="font-size: 18px"> MEDICAMENTO </span>
-              </div>
-            </div> -->
-          </q-toolbar>
-          <hr style="border: 0; height: 0.9px; background: #d0d0d0" class="q-mt-none" />
-        </q-header>
-        <q-page-container>
-          <q-page>
-            <q-card flat class="my-card">
-              <q-card-section> Product </q-card-section>
-            </q-card>
-          </q-page>
-        </q-page-container>
-      </q-layout>
-    </div>
   </div>
 </template>
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onActivated } from 'vue'
 import { api } from 'boot/axios'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 export default {
   name: 'searchPage',
 
   setup() {
+    /* Variables */
     const { t } = useI18n()
+    const router = useRouter()
     const searchText = ref('')
     const dataProducts = ref()
-
-    const clickrow = (row) => {
-      console.log('clicked on', row)
+    const loading = ref(false)
+    const pagination = ref()
+    /* Function */
+    const REDIRECT_PRODUCT = (row) => {
+      router.push({ name: 'product-id', params: { id: row } })
     }
-
-    const formatCurrency = (val) => {
+    const FORMAT_CURRENCY = (val) => {
       return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val)
     }
-    const pagination = ref()
-
-    const getListProduct = (page) => {
+    const GET_LIST_PRODUCTS = (page) => {
+      loading.value = true
       api
         .get(`/products/?keyword=${searchText.value}&page=${page}`)
         .then((response) => {
           dataProducts.value = response.data.data
           pagination.value = response.data.meta
+          loading.value = false
         })
         .catch((error) => {
           console.log(error)
         })
     }
     onMounted(() => {
-      getListProduct(1)
+      GET_LIST_PRODUCTS(1)
     })
-    const columns = [
+    onActivated(() => {
+      GET_LIST_PRODUCTS(1)
+    })
+
+    /* Table columns preset */
+    const tableColumns = [
       { name: 'id', label: t('searchProduct.id'), field: 'id', align: 'left' },
       {
         name: 'name',
@@ -148,18 +201,81 @@ export default {
       { name: 'price', label: t('searchProduct.price'), align: 'left', field: 'price', sortable: true },
       { name: 'inventory', label: t('searchProduct.inventory'), field: 'inventory', sortable: true },
     ]
-
+    /* return */
     return {
+      REDIRECT_PRODUCT,
+      FORMAT_CURRENCY,
+      GET_LIST_PRODUCTS,
+      loading,
       dataProducts,
-      columns,
+      tableColumns,
       current: ref(3),
-      clickrow,
       searchText,
-      formatCurrency,
-      getListProduct,
       pagination,
     }
   },
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.coisa {
+  --border-width: 1px;
+  border-radius: 10px;
+  position: relative;
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: calc(-1 * var(--border-width));
+    left: calc(-1 * var(--border-width));
+    z-index: -1;
+    width: calc(100% + var(--border-width) * 2);
+    height: calc(100% + var(--border-width) * 2);
+    background: linear-gradient(
+      60deg,
+      hsl(224, 85%, 66%),
+      hsl(269, 85%, 66%),
+      hsl(314, 85%, 66%),
+      hsl(359, 85%, 66%),
+      hsl(44, 85%, 66%),
+      hsl(89, 85%, 66%),
+      hsl(134, 85%, 66%),
+      hsl(179, 85%, 66%)
+    );
+    background-size: 300% 300%;
+    background-position: 0 50%;
+    border-radius: calc(10 * var(--border-width));
+    animation: moveGradient 4s alternate infinite;
+  }
+}
+
+@keyframes moveGradient {
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.avatar-container {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  background: white;
+  background-size: cover;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.avatar-container::after {
+  position: absolute;
+  width: 94%;
+  height: 94%;
+  border-radius: 50%;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  content: '';
+  top: 3%;
+  left: 3%;
+}
+</style>
