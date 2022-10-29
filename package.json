@@ -6,8 +6,9 @@
   "author": "jcsantana <jcsantana@users.noreply.github.com>",
   "private": true,
   "scripts": {
-    "postinstall": "quasar build -m pwa",
+    "build": "quasar build -m pwa",
     "start": "node server.js",
+    "heroku-postbuild": "yarn && yarn build",
     "lint": "eslint --ext .js,.ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0"
@@ -15,8 +16,11 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
+    "connect-history-api-fallback": "^2.0.0",
+    "express": "^4.18.2",
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",
+    "serve-static": "^1.15.0",
     "vue": "^3.0.0",
     "vue-currency-input": "^3.0.1",
     "vue-i18n": "^9.2.2",
