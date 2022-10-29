@@ -1,0 +1,66 @@
+<template>
+  <div>
+    <div class="row bg-grey-10 text-white">
+      <div class="colMenu col flex justify-center">
+        <q-list>
+          <q-item>
+            <q-item-section>{{ message }}</q-item-section>
+          </q-item>
+        </q-list>
+      </div>
+    </div>
+    <q-list>
+      <q-expansion-item
+        v-for="item in Menu.links"
+        v-bind:key="item.title"
+        v-show="item.expanded"
+        :expand-icon-class="item.color"
+        :icon="item.icon"
+        :label="$t(item.title)"
+      >
+        <q-card :class="$q.dark.isActive ? 'bg-dark text-white' : 'bg-grey-3 text-black'">
+          <q-item v-for="item2 in item.subMenu" v-bind:key="item2.title" :to="item2.to" active-class="my-menu-link" clickable>
+            <q-item-section avatar>
+              <q-avatar>
+                <q-icon :class="item2.color" :name="item2.icon" />
+              </q-avatar>
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label lines="1">{{ $t(item2.title) }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-card>
+      </q-expansion-item>
+      <q-item v-for="item in Menu.links" v-bind:key="item.title" v-show="!item.expanded" clickable v-ripple>
+        <q-item-section avatar>
+          <q-avatar>
+            <q-icon :name="item.icon" />
+          </q-avatar>
+        </q-item-section>
+
+        <q-item-section>
+          <q-item-label lines="1">{{ $t(item.title) }}</q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+  </div>
+</template>
+
+<script>
+import { Menu } from './menu'
+export default {
+  name: 'menuComponent',
+  setup() {
+    return {
+      message: 'MENU APP',
+      Menu,
+    }
+  },
+}
+</script>
+<style>
+.colMenu {
+  padding-top: 0.1rem;
+}
+</style>
