@@ -3,12 +3,7 @@
     <!-- Desktop -->
     <div v-if="$q.platform.is.desktop">
       <q-page class="q-pa-xl">
-        <q-inner-loading
-          :showing="!loadingData"
-          label="Carregando dados aguarde"
-          label-class="text-blue-10"
-          label-style="font-size: 1.1em"
-        />
+        <q-inner-loading :showing="!loadingData" label="Carregando dados aguarde" label-class="text-blue-10" label-style="font-size: 1.1em" />
         <div v-if="loadingData" class="row flex flex-center">
           <div class="q-mt-md col-8">
             <q-card square class="my-card q-pa-md">
@@ -23,42 +18,18 @@
                 <div class="col-12">
                   <div class="row q-col-gutter-xs">
                     <div class="col-12 col-md-6">
-                      <q-input
-                        dense
-                        rounded
-                        outlined
-                        ref="inputRef"
-                        v-model="product.name"
-                        label=" * NOME"
-                        :rules="[(val) => !!val || 'Campo obrigatorio']"
-                      />
+                      <q-input dense rounded outlined ref="inputRef" v-model="product.name" label=" * NOME" :rules="[(val) => !!val || 'Campo obrigatorio']" />
                     </div>
                     <div class="col-12 col-md-3">
                       <CurrencyComponent v-model="product.price" :options="{ currency: 'BRL' }" />
                     </div>
                     <div class="col-12 col-md-3">
-                      <q-input
-                        dense
-                        rounded
-                        outlined
-                        ref="inputRef"
-                        v-model="product.inventory"
-                        label="* ESTOQUE"
-                        :rules="[(val) => !!val || 'Campo obrigatorio']"
-                      />
+                      <q-input dense rounded outlined ref="inputRef" v-model="product.inventory" label="* ESTOQUE" :rules="[(val) => !!val || 'Campo obrigatorio']" />
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
-                      <q-input
-                        dense
-                        rounded
-                        outlined
-                        ref="inputRef"
-                        v-model="product.description"
-                        label="* DESCRIÇÃO"
-                        :rules="[(val) => !!val || 'Campo obrigatorio']"
-                      />
+                      <q-input dense rounded outlined ref="inputRef" v-model="product.description" label="* DESCRIÇÃO" :rules="[(val) => !!val || 'Campo obrigatorio']" />
                     </div>
                   </div>
                 </div>
@@ -70,72 +41,41 @@
     </div>
     <!-- Mobile -->
     <div v-if="$q.platform.is.mobile">
-      <q-layout view="lHh lpR fFf" :class="$q.dark.isActive ? 'bg-brand' : 'bg-white'">
-        <q-header :class="$q.dark.isActive ? ' bg-brand' : ' bg-white'">
-          <q-toolbar :class="$q.dark.isActive ? 'bg-brand' : 'bg-white text-black'">
+      <q-layout view="lHh lpR fFf">
+        <q-header :class="$q.dark.isActive ? 'background-toolbar-dark text-white' : 'background-toolbar-light text-black'">
+          <q-toolbar>
             <q-btn @click="this.$router.go(-1)" flat round dense icon="arrow_back_ios" />
-            <q-toolbar-title style="font-size: 19px; text-align: center; padding-right: 1em" class="title q-pl-none"
-              >CADASTRAR PRODUTOS</q-toolbar-title
-            >
+            <q-toolbar-title style="font-size: 19px; text-align: center; padding-right: 1em" class="title q-pl-none">CADASTRAR PRODUTOS</q-toolbar-title>
           </q-toolbar>
-          <!-- <hr style="border: 0; height: 0.9px; background: #d0d0d0" class="q-mt-none" /> -->
+          <hr :class="$q.dark.isActive ? 'hr--dark q-ma-none' : 'hr--light q-ma-none'" />
         </q-header>
 
         <q-page-container>
           <q-page class="q-pa-sm">
-            <q-inner-loading
-              :showing="!loadingData"
-              label="Carregando dados aguarde"
-              label-class="text-blue-10"
-              label-style="font-size: 1.1em"
-            />
+            <q-inner-loading :showing="!loadingData" label="Carregando dados aguarde" label-class="text-blue-10" label-style="font-size: 1.1em" />
             <div v-if="loadingData" class="row flex flex-center q-mt-sm">
               <div class="row">
                 <div class="col-12">
                   <div class="row q-col-gutter-xs">
                     <div class="col-12 col-md-6">
-                      <q-input
-                        dense
-                        rounded
-                        outlined
-                        ref="inputRef"
-                        v-model="product.name"
-                        label=" * NOME"
-                        :rules="[(val) => !!val || 'Campo obrigatorio']"
-                      />
+                      <q-input dense rounded outlined ref="inputRef" v-model="product.name" label=" * NOME" :rules="[(val) => !!val || 'Campo obrigatorio']" />
                     </div>
                     <div class="col-12 col-md-3">
                       <CurrencyComponent v-model="product.price" :options="{ currency: 'BRL' }" />
                     </div>
                     <div class="col-12 col-md-3">
-                      <q-input
-                        dense
-                        rounded
-                        outlined
-                        ref="inputRef"
-                        v-model="product.inventory"
-                        label="* ESTOQUE"
-                        :rules="[(val) => !!val || 'Campo obrigatorio']"
-                      />
+                      <q-input dense rounded outlined ref="inputRef" v-model="product.inventory" label="* ESTOQUE" :rules="[(val) => !!val || 'Campo obrigatorio']" />
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
-                      <q-input
-                        dense
-                        rounded
-                        outlined
-                        ref="inputRef"
-                        v-model="product.description"
-                        label="* DESCRIÇÃO"
-                        :rules="[(val) => !!val || 'Campo obrigatorio']"
-                      />
+                      <q-input dense rounded outlined ref="inputRef" v-model="product.description" label="* DESCRIÇÃO" :rules="[(val) => !!val || 'Campo obrigatorio']" />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <hr style="border: 0; height: 1px; background: #d0d0d0" class="q-mt-none" />
+            <hr :class="$q.dark.isActive ? 'hr--dark' : 'hr--light'" />
             <div class="row q-col-gutter-xs q-mt-xs">
               <div class="col">
                 <q-btn class="full-width" @click="CREATE_OR_UPDATE_PRODUCT()" color="green-7" label="SALVAR" />
@@ -175,15 +115,10 @@ export default {
     })
 
     const CREATE_OR_UPDATE_PRODUCT = () => {
-      if (
-        (data.product.name.length <= 0) |
-        (data.product.price.length <= 0) |
-        (data.product.inventory.length <= 0) |
-        (data.product.description.length <= 0)
-      ) {
+      if ((data.product.name.length <= 0) | (data.product.price.length <= 0) | (data.product.inventory.length <= 0) | (data.product.description.length <= 0)) {
         Notify.create({
           message: 'Campos importantes em branco',
-          position: 'top',
+          position: 'bottom',
           color: 'red-10',
         })
       } else {
@@ -193,14 +128,14 @@ export default {
             .then((response) => {
               Notify.create({
                 message: response.data,
-                position: 'top',
+                position: 'bottom',
                 color: 'green-10',
               })
             })
             .catch((error) => {
               Notify.create({
                 message: error.data,
-                position: 'top',
+                position: 'bottom',
                 color: 'red-10',
               })
             })
@@ -210,14 +145,14 @@ export default {
             .then((response) => {
               Notify.create({
                 message: response.data,
-                position: 'top',
+                position: 'bottom',
                 color: 'green-10',
               })
             })
             .catch((error) => {
               Notify.create({
                 message: error.data,
-                position: 'top',
+                position: 'bottom',
                 color: 'red-10',
               })
             })
@@ -236,7 +171,7 @@ export default {
           .then((response) => {
             Notify.create({
               message: response.data + ', você sera redirecionando',
-              position: 'top',
+              position: 'bottom',
               color: 'red-10',
             })
             router.push({ name: 'search-products' })

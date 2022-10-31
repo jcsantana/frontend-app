@@ -20,16 +20,17 @@
     </q-layout>
     <!-- Layout Desktop -->
     <q-layout v-if="$q.platform.is.desktop" view="lHh lpR lFf">
-      <q-header elevated class="bg-grey-10 text-white">
-        <q-toolbar>
+      <q-header :class="$q.dark.isActive ? 'bg-dark text-white' : 'background-toolbar-light text-black'">
+        <q-toolbar unlevated>
           <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
           <q-toolbar-title>
             <span>DASHBOARD</span>
           </q-toolbar-title>
         </q-toolbar>
+        <hr :class="$q.dark.isActive ? 'hr--dark q-ma-none' : 'hr--light q-ma-none'" />
       </q-header>
 
-      <q-drawer class="bg-grey-2" show-if-above v-model="leftDrawerOpen" side="left">
+      <q-drawer bordered show-if-above v-model="leftDrawerOpen" side="left">
         <componentMenu />
       </q-drawer>
 

@@ -29,7 +29,7 @@
         :icon="item.icon"
         :label="$t(item.title)"
       >
-        <q-card :class="$q.dark.isActive ? 'bg-dark text-white' : 'bg-grey-3 text-black'">
+        <q-card :class="$q.dark.isActive ? 'bg-dark text-white' : 'bg-grey-2 text-black'">
           <q-item v-for="item2 in item.subMenu" v-bind:key="item2.title" :to="item2.to" active-class="my-menu-link" clickable>
             <q-item-section avatar>
               <q-avatar>
@@ -74,7 +74,7 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 .colMenu {
   padding-top: 0.1rem;
 }

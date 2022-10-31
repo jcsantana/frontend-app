@@ -1,1 +1,43 @@
 // app global css in SCSS form
+.body--light {
+  background: #f7f7f7;
+
+}
+
+.body--dark {
+  background: red;
+
+}
+
+.q-drawer--light{
+  background: #fdfdfd;
+}
+
+.q-list--dark.q-list--separator > .q-item-type + .q-item-type, .q-list--dark.q-list--separator > .q-virtual-scroll__content > .q-item-type + .q-item-type{
+
+    border-top-color: #3e3e3e;
+}
+
+
+
+.hr--dark{
+  border: 0; height: 0.5px; background: #3e3e3e
+}
+
+.hr--light{
+  border: 0; height: 0.5px; background: #d0d0d0
+}
+
+
+
+.background-toolbar-light{
+ /*  background: #fdfdfd; */
+ background: #fdfdfd;
+
+}
+.background-toolbar-dark{
+  /*  background: #fdfdfd; */
+  background: #1D1D1D;
+
+ }
+

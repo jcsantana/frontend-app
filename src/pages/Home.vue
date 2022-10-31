@@ -48,51 +48,50 @@
     </div>
     <!-- Mobile -->
     <div v-if="$q.platform.is.mobile">
-      <q-layout view="lHh lpR fFf" :class="$q.dark.isActive ? 'bg-brand' : 'bg-white'">
-        <q-header :class="$q.dark.isActive ? ' bg-brand' : ' bg-white'">
-          <q-toolbar class="text-black">
-            <q-btn class="text-center" size="16px" @click="toggleLeftDrawer" flat round dense icon="menu" />
-            <q-toolbar-title> TESTE APP </q-toolbar-title>
+      <q-layout view="lHh lpR fFf">
+        <q-header :class="$q.dark.isActive ? 'background-toolbar-dark text-white' : 'background-toolbar-light text-black q-ma-none q-pt-none'">
+          <q-toolbar unlevated>
+            <q-btn class="bg-grey-10 text-white" dense unelevated icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
+            <q-toolbar-title class="text-center"> COSTA CAFÉ </q-toolbar-title>
             <q-avatar size="30px">
               <img src="~assets/logo.png" />
             </q-avatar>
           </q-toolbar>
+          <hr :class="$q.dark.isActive ? 'hr--dark' : 'hr--light'" />
         </q-header>
         <q-page-container>
           <q-page>
-            <q-drawer class="bg-grey-2" show-if-above v-model="leftDrawerOpen" side="left">
-              <componentMenu :color="'bg-grey-2 text-black'" />
+            <q-drawer show-if-above v-model="leftDrawerOpen" side="left">
+              <componentMenu :color="'text-black'" />
             </q-drawer>
-            <q-card flat class="my-card">
-              <q-card-section>
-                <div class="row q-mt-lg">
-                  <div class="col-12">
-                    <div class="container">
-                      <div class="box">
-                        <div class="title">
-                          <span class="block"></span>
-                          <h1>TESTE APP<span></span></h1>
-                        </div>
 
-                        <div class="role">
-                          <div class="block"></div>
-                          <p>BY JOSE CANDIDO</p>
-                        </div>
-                      </div>
+            <div class="row q-mt-lg">
+              <div class="col-12">
+                <div class="container">
+                  <div class="box">
+                    <div class="title">
+                      <span class="block"></span>
+                      <h1>TESTE APP<span></span></h1>
+                    </div>
+
+                    <div class="role">
+                      <div class="block"></div>
+                      <p>BY JOSE CANDIDO</p>
                     </div>
                   </div>
-
-                  <div class="bootom q-mt-sm q-gutter-xs col-12 flex flex-center">
-                    <q-btn color="red-10" label="FACEBOOK" />
-                    <q-btn color="blue-10" label="INSTAGRAM" />
-                    <q-btn color="grey-5" label="GITHUB" />
-                  </div>
                 </div>
-              </q-card-section>
-            </q-card>
+              </div>
+
+              <div class="bootom q-mt-sm q-gutter-xs col-12 flex flex-center">
+                <q-btn color="red-10" label="FACEBOOK" />
+                <q-btn color="blue-10" label="INSTAGRAM" />
+                <q-btn color="grey-5" label="GITHUB" />
+              </div>
+            </div>
+
             <div v-if="inventoryState" class="row q-ma-xs q-pt-md q-col-gutter-xs text-center">
               <div class="col-6">
-                <q-card class="my-card bg-green-7 text-white">
+                <q-card flat bordered class="my-card">
                   <q-card-section>
                     <div class="text-h6">$ PRODUTOS</div>
                     {{ FORMAT_CURRENCY(inventoryState.value_inventory[0].total) }}
@@ -100,7 +99,7 @@
                 </q-card>
               </div>
               <div class="col-6">
-                <q-card class="my-card bg-blue-7 text-white">
+                <q-card flat bordered class="my-card">
                   <q-card-section>
                     <div class="text-h6">ESTOQUE</div>
                     {{ inventoryState.quantity_inventory[0].total }}

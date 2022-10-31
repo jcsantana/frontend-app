@@ -2,8 +2,8 @@
   <div>
     <!-- Mobile -->
     <div v-if="$q.platform.is.mobile">
-      <q-layout view="lHh lpR lFf" :class="$q.dark.isActive ? 'bg-brand' : 'bg-white'">
-        <q-footer class="bg-white">
+      <q-layout view="lHh lpR lFf">
+        <q-footer :class="$q.dark.isActive ? 'background-toolbar-dark text-white' : 'background-toolbar-light text-black'">
           <q-toolbar>
             <q-pagination
               v-if="dataProducts"
@@ -12,45 +12,46 @@
               :max="pagination.last_page"
               direction-links
               flat
-              color="grey-10"
+              :color="$q.dark.isActive ? 'white' : 'black'"
               active-color="red-10"
             />
           </q-toolbar>
         </q-footer>
 
-        <q-header :class="$q.dark.isActive ? ' bg-brand' : ' bg-white'">
-          <q-toolbar :class="$q.dark.isActive ? 'bg-brand' : 'bg-white text-black'">
+        <q-header
+          :class="$q.dark.isActive ? 'background-toolbar-dark text-white' : 'background-toolbar-light text-black q-ma-none q-pt-none'"
+        >
+          <q-toolbar unlevated>
             <q-btn @click="$router.go(-1)" flat round dense icon="arrow_back_ios" />
             <q-toolbar-title style="font-size: 19px; text-align: center; padding-right: 1em" class="title q-pl-none"
               >PESQUISAR PRODUTOS</q-toolbar-title
             >
           </q-toolbar>
-          <q-input @keyup="GET_LIST_PRODUCTS(1)" v-model="searchText" dense rounded outlined class="q-pa-md bg-white text-black">
+          <hr :class="$q.dark.isActive ? 'hr--dark' : 'hr--light'" />
+          <q-input @keyup="GET_LIST_PRODUCTS(1)" v-model="searchText" dense rounded outlined class="q-pa-md">
             <template v-slot:append> <q-icon name="search" /> </template
           ></q-input>
         </q-header>
 
         <q-page-container>
           <q-page>
-            <q-card flat class="my-card q-mt-sm">
-              <q-list separator>
-                <q-linear-progress v-show="loading" size="1px" indeterminate />
+            <q-list separator>
+              <q-linear-progress v-show="loading" size="1px" indeterminate />
 
-                <q-item :to="{ name: 'product-id', params: { id: n.id } }" v-for="n in dataProducts" v-bind:key="n" clickable v-ripple>
-                  <q-item-section>
-                    <q-item-label>{{ n.name }}</q-item-label>
-                    <q-item-label class="text-weight-medium" caption lines="2">{{ n.description }}</q-item-label>
-                  </q-item-section>
+              <q-item :to="{ name: 'product-id', params: { id: n.id } }" v-for="n in dataProducts" v-bind:key="n" clickable v-ripple>
+                <q-item-section>
+                  <q-item-label>{{ n.name }}</q-item-label>
+                  <q-item-label class="text-weight-medium" caption lines="2">{{ n.description }}</q-item-label>
+                </q-item-section>
 
-                  <q-item-section side top>
-                    <q-item-label class="text-weight-medium" caption>Preço</q-item-label>
-                    <q-item-label class="text-red-10 text-weight-medium" caption>{{ FORMAT_CURRENCY(n.price) }}</q-item-label>
-                  </q-item-section>
-                </q-item>
+                <q-item-section side top>
+                  <q-item-label class="text-weight-medium" caption>Preço</q-item-label>
+                  <q-item-label class="text-red-10 text-weight-medium" caption>{{ FORMAT_CURRENCY(n.price) }}</q-item-label>
+                </q-item-section>
+              </q-item>
 
-                <q-separator />
-              </q-list>
-            </q-card>
+              <hr class="hr--dark" />
+            </q-list>
           </q-page>
         </q-page-container>
       </q-layout>
@@ -60,7 +61,7 @@
       <q-page class="q-pa-xl">
         <div class="row flex flex-center">
           <div class="q-mt-md col-10">
-            <q-card class="my-card coisa">
+            <q-card flat class="my-card coisa">
               <div class="row">
                 <div class="col column inline">
                   <q-card-section>
@@ -82,7 +83,7 @@
                 </div>
                 <div class="col-2 flex justify-end">
                   <q-btn v-ripple:white to="/product" flat stack>
-                    <q-icon style="color: white; background-color: black" v-ripple:white class="icons coisa" size="md" name="add" />
+                    <q-icon style="color: white; background-color: black" v-ripple:white class="coisa" size="md" name="add" />
                     <span class="button-tag">PRODUTOS</span></q-btn
                   >
                 </div>
@@ -92,6 +93,7 @@
 
           <div class="q-mt-md col-10">
             <q-table
+              flat
               class="coisa"
               :loading="loading"
               :rows-per-page-options="[20]"
@@ -119,7 +121,7 @@
             </q-table>
           </div>
           <div class="q-mt-md col-10">
-            <q-card class="my-card coisa">
+            <q-card flat class="my-card coisa">
               <q-card-section>
                 <q-pagination
                   v-if="dataProducts"
@@ -212,7 +214,7 @@ export default {
   },
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .coisa {
   --border-width: 1px;
   border-radius: 10px;
