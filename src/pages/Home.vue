@@ -42,9 +42,8 @@
           </div>
 
           <div class="q-mt-sm q-gutter-xs col-12 flex flex-center">
-            <q-btn color="red-10" label="FACEBOOK" />
-            <q-btn color="blue-10" label="INSTAGRAM" />
-            <q-btn color="grey-5" label="GITHUB" />
+            <q-btn href="https://www.linkedin.com/in/jos%C3%A9-c%C3%A2ndido-santana-neto-25983882/" color="blue-10" label="LINKEDIN" />
+            <q-btn href="https://github.com/jcsantana" color="grey-5" label="GITHUB" />
           </div>
         </div>
       </q-page>
