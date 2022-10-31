@@ -55,7 +55,7 @@
 <script lang="ts">
 import { ref, defineComponent } from 'vue'
 import componentMenu from 'src/components/menuComponent/Menu.vue'
-
+import { AddressbarColor, useQuasar } from 'quasar'
 export default defineComponent({
   name: 'App',
   components: {
@@ -63,6 +63,10 @@ export default defineComponent({
   },
   setup() {
     const leftDrawerOpen = ref(false)
+    const $q = useQuasar()
+    if ($q.dark.isActive) {
+      AddressbarColor.set('#1D1D1D')
+    }
     return {
       leftDrawerOpen,
       toggleLeftDrawer() {
