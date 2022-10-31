@@ -66,6 +66,8 @@ export default defineComponent({
     const $q = useQuasar()
     if ($q.dark.isActive) {
       AddressbarColor.set('#1D1D1D')
+    } else {
+      AddressbarColor.set('#fdfdfd')
     }
     return {
       leftDrawerOpen,

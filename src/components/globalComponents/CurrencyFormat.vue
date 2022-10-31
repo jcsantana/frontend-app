@@ -1,13 +1,5 @@
 <template>
-  <q-input
-    ref="inputRef"
-    :rules="[(val) => !!val || 'Campo obrigatorio']"
-    v-model="formattedValue"
-    dense
-    rounded
-    outlined
-    label="* PREÇO"
-  />
+  <q-input ref="inputRef" :rules="[(val) => !!val || $t('productPage.required_input')]" v-model="formattedValue" dense rounded outlined :label="label" />
 </template>
 
 <script>
@@ -18,6 +10,7 @@ export default {
   name: 'QCurrencyInput',
   props: {
     modelValue: null,
+    label: String,
     value: Number,
     options: Object,
   },

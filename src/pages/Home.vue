@@ -3,22 +3,25 @@
     <!-- Desktop -->
     <div v-if="$q.platform.is.desktop">
       <q-page>
-        <div v-if="inventoryState" class="row q-pa-xl q-pt-md q-col-gutter-xs text-center">
-          <div class="col-6">
-            <q-card class="my-card bg-green-7 text-white">
-              <q-card-section>
-                <div class="text-h6">$ VALOR EM PRODUTOS</div>
-                {{ FORMAT_CURRENCY(inventoryState.value_inventory[0].total) }}
-              </q-card-section>
-            </q-card>
-          </div>
-          <div class="col-6">
-            <q-card class="my-card bg-blue-7 text-white">
-              <q-card-section>
-                <div class="text-h6">TOTAL DO ESTOQUE</div>
-                {{ inventoryState.quantity_inventory[0].total }}
-              </q-card-section>
-            </q-card>
+        <div v-if="inventoryState" class="q-pa-lg">
+          <div class="row q-col-gutter-xs">
+            <div class="col-auto">
+              <q-card class="my-card bg-green-10 text-white">
+                <q-card-section>
+                  <div class="text-h6">$ {{ $t('homePage.value_inventory') }}</div>
+
+                  <div class="text-center">{{ FORMAT_CURRENCY(inventoryState.value_inventory[0].total) }}</div>
+                </q-card-section>
+              </q-card>
+            </div>
+            <div class="col-auto">
+              <q-card class="my-card bg-blue-10 text-white">
+                <q-card-section>
+                  <div class="text-h6">{{ $t('homePage.stock_quantity') }}</div>
+                  <div class="text-center">{{ inventoryState.quantity_inventory[0].total }}</div>
+                </q-card-section>
+              </q-card>
+            </div>
           </div>
         </div>
         <div class="row q-mt-xl flex flex-center items-center">
@@ -93,7 +96,7 @@
               <div class="col-6">
                 <q-card flat bordered class="my-card">
                   <q-card-section>
-                    <div class="text-h6">$ PRODUTOS</div>
+                    <div class="text-h6">{{ $t('homePage.value_inventory') }}</div>
                     {{ FORMAT_CURRENCY(inventoryState.value_inventory[0].total) }}
                   </q-card-section>
                 </q-card>
@@ -101,7 +104,7 @@
               <div class="col-6">
                 <q-card flat bordered class="my-card">
                   <q-card-section>
-                    <div class="text-h6">ESTOQUE</div>
+                    <div class="text-h6">{{ $t('homePage.stock_quantity') }}</div>
                     {{ inventoryState.quantity_inventory[0].total }}
                   </q-card-section>
                 </q-card>

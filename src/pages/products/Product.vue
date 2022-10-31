@@ -8,28 +8,52 @@
           <div class="q-mt-md col-8">
             <q-card square class="my-card q-pa-md">
               <q-banner inline-actions class="text-white bg-red-10 q-mb-md">
-                Cadastro de Produtos
+                {{ $t('productPage.title') }}
                 <template v-slot:action>
-                  <q-btn @click="CREATE_OR_UPDATE_PRODUCT()" flat color="white" label="SALVAR" />
-                  <q-btn @click="DELETE_PRODUCT()" v-show="editOrCreate" flat color="white" label="DELETAR" />
+                  <q-btn @click="CREATE_OR_UPDATE_PRODUCT()" flat color="white" :label="$t('productPage.btn_create_or_update')" />
+                  <q-btn @click="DELETE_PRODUCT()" v-show="editOrCreate" flat color="white" :label="$t('productPage.btn_delete')" />
                 </template>
               </q-banner>
               <div class="row">
                 <div class="col-12">
                   <div class="row q-col-gutter-xs">
                     <div class="col-12 col-md-6">
-                      <q-input dense rounded outlined ref="inputRef" v-model="product.name" label=" * NOME" :rules="[(val) => !!val || 'Campo obrigatorio']" />
+                      <q-input
+                        dense
+                        rounded
+                        outlined
+                        ref="inputRef"
+                        v-model="product.name"
+                        :label="$t('productPage.name')"
+                        :rules="[(val) => !!val || $t('productPage.required_input')]"
+                      />
                     </div>
                     <div class="col-12 col-md-3">
-                      <CurrencyComponent v-model="product.price" :options="{ currency: 'BRL' }" />
+                      <CurrencyComponent :label="$t('productPage.price')" v-model="product.price" :options="{ currency: 'BRL' }" />
                     </div>
                     <div class="col-12 col-md-3">
-                      <q-input dense rounded outlined ref="inputRef" v-model="product.inventory" label="* ESTOQUE" :rules="[(val) => !!val || 'Campo obrigatorio']" />
+                      <q-input
+                        dense
+                        rounded
+                        outlined
+                        ref="inputRef"
+                        v-model="product.inventory"
+                        :label="$t('productPage.inventory')"
+                        :rules="[(val) => !!val || $t('productPage.required_input')]"
+                      />
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
-                      <q-input dense rounded outlined ref="inputRef" v-model="product.description" label="* DESCRIÇÃO" :rules="[(val) => !!val || 'Campo obrigatorio']" />
+                      <q-input
+                        dense
+                        rounded
+                        outlined
+                        ref="inputRef"
+                        v-model="product.description"
+                        :label="$t('productPage.description')"
+                        :rules="[(val) => !!val || $t('productPage.required_input')]"
+                      />
                     </div>
                   </div>
                 </div>
@@ -45,9 +69,10 @@
         <q-header :class="$q.dark.isActive ? 'background-toolbar-dark text-white' : 'background-toolbar-light text-black'">
           <q-toolbar>
             <q-btn @click="this.$router.go(-1)" flat round dense icon="arrow_back_ios" />
-            <q-toolbar-title style="font-size: 19px; text-align: center; padding-right: 1em" class="title q-pl-none">CADASTRAR PRODUTOS</q-toolbar-title>
+            <q-toolbar-title style="font-size: 19px; text-align: center; padding-right: 1em" class="title q-pl-none">{{ $t('productPage.title') }}</q-toolbar-title>
+            <q-btn to="/" flat round dense icon="home" />
           </q-toolbar>
-          <hr :class="$q.dark.isActive ? 'hr--dark q-ma-none' : 'hr--light q-ma-none'" />
+          <hr :class="$q.dark.isActive ? 'hr--dark' : 'hr--light'" />
         </q-header>
 
         <q-page-container>
@@ -58,18 +83,42 @@
                 <div class="col-12">
                   <div class="row q-col-gutter-xs">
                     <div class="col-12 col-md-6">
-                      <q-input dense rounded outlined ref="inputRef" v-model="product.name" label=" * NOME" :rules="[(val) => !!val || 'Campo obrigatorio']" />
+                      <q-input
+                        dense
+                        rounded
+                        outlined
+                        ref="inputRef"
+                        v-model="product.name"
+                        :label="$t('productPage.name')"
+                        :rules="[(val) => !!val || $t('productPage.required_input')]"
+                      />
                     </div>
                     <div class="col-12 col-md-3">
-                      <CurrencyComponent v-model="product.price" :options="{ currency: 'BRL' }" />
+                      <CurrencyComponent :label="$t('productPage.price')" v-model="product.price" :options="{ currency: 'BRL' }" />
                     </div>
                     <div class="col-12 col-md-3">
-                      <q-input dense rounded outlined ref="inputRef" v-model="product.inventory" label="* ESTOQUE" :rules="[(val) => !!val || 'Campo obrigatorio']" />
+                      <q-input
+                        dense
+                        rounded
+                        outlined
+                        ref="inputRef"
+                        v-model="product.inventory"
+                        :label="$t('productPage.inventory')"
+                        :rules="[(val) => !!val || $t('productPage.required_input')]"
+                      />
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
-                      <q-input dense rounded outlined ref="inputRef" v-model="product.description" label="* DESCRIÇÃO" :rules="[(val) => !!val || 'Campo obrigatorio']" />
+                      <q-input
+                        dense
+                        rounded
+                        outlined
+                        ref="inputRef"
+                        v-model="product.description"
+                        :label="$t('productPage.description')"
+                        :rules="[(val) => !!val || $t('productPage.required_input')]"
+                      />
                     </div>
                   </div>
                 </div>
@@ -78,10 +127,10 @@
             <hr :class="$q.dark.isActive ? 'hr--dark' : 'hr--light'" />
             <div class="row q-col-gutter-xs q-mt-xs">
               <div class="col">
-                <q-btn class="full-width" @click="CREATE_OR_UPDATE_PRODUCT()" color="green-7" label="SALVAR" />
+                <q-btn class="full-width" @click="CREATE_OR_UPDATE_PRODUCT()" color="green-7" :label="$t('productPage.btn_create_or_update')" />
               </div>
               <div v-show="editOrCreate" class="col">
-                <q-btn class="full-width" @click="DELETE_PRODUCT()" color="red-8" label="DELETAR" />
+                <q-btn class="full-width" @click="DELETE_PRODUCT()" color="red-8" :label="$t('productPage.btn_delete')" />
               </div>
             </div>
           </q-page>

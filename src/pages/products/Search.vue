@@ -18,17 +18,22 @@
           </q-toolbar>
         </q-footer>
 
-        <q-header
-          :class="$q.dark.isActive ? 'background-toolbar-dark text-white' : 'background-toolbar-light text-black q-ma-none q-pt-none'"
-        >
+        <q-header :class="$q.dark.isActive ? 'background-toolbar-dark text-white' : 'background-toolbar-light text-black q-ma-none q-pt-none'">
           <q-toolbar unlevated>
             <q-btn @click="$router.go(-1)" flat round dense icon="arrow_back_ios" />
-            <q-toolbar-title style="font-size: 19px; text-align: center; padding-right: 1em" class="title q-pl-none"
-              >PESQUISAR PRODUTOS</q-toolbar-title
-            >
+            <q-toolbar-title style="font-size: 19px; text-align: center; padding-right: 1em" class="title q-pl-none">{{ $t('searchProduct.title') }}</q-toolbar-title>
+            <q-btn to="/product" flat round dense icon="add" />
+            <q-btn to="/" flat round dense icon="home" />
           </q-toolbar>
           <hr :class="$q.dark.isActive ? 'hr--dark' : 'hr--light'" />
-          <q-input @keyup="GET_LIST_PRODUCTS(1)" v-model="searchText" dense rounded outlined class="q-pa-md">
+          <q-input
+            @keyup="GET_LIST_PRODUCTS(1)"
+            v-model="searchText"
+            :class="$q.dark.isActive ? 'background-toolbar-dark text-white q-pa-md' : 'bg-white text-black q-pa-md'"
+            dense
+            rounded
+            outlined
+          >
             <template v-slot:append> <q-icon name="search" /> </template
           ></q-input>
         </q-header>
@@ -45,12 +50,12 @@
                 </q-item-section>
 
                 <q-item-section side top>
-                  <q-item-label class="text-weight-medium" caption>Preço</q-item-label>
+                  <q-item-label class="text-weight-medium" caption>{{ $t('searchProduct.list_price') }}</q-item-label>
                   <q-item-label class="text-red-10 text-weight-medium" caption>{{ FORMAT_CURRENCY(n.price) }}</q-item-label>
                 </q-item-section>
               </q-item>
 
-              <hr class="hr--dark" />
+              <hr :class="$q.dark.isActive ? 'hr--dark q-ma-none' : 'hr--light q-ma-none'" />
             </q-list>
           </q-page>
         </q-page-container>
@@ -65,14 +70,7 @@
               <div class="row">
                 <div class="col column inline">
                   <q-card-section>
-                    <q-input
-                      @keyup="GET_LIST_PRODUCTS(1)"
-                      :label="$t('searchProduct.input_search_product')"
-                      dense
-                      rounded
-                      outlined
-                      v-model="searchText"
-                    >
+                    <q-input @keyup="GET_LIST_PRODUCTS(1)" :label="$t('searchProduct.input_search_product')" dense rounded outlined v-model="searchText">
                       <template v-slot:append>
                         <q-avatar>
                           <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" />
@@ -84,7 +82,7 @@
                 <div class="col-2 flex justify-end">
                   <q-btn v-ripple:white to="/product" flat stack>
                     <q-icon style="color: white; background-color: black" v-ripple:white class="coisa" size="md" name="add" />
-                    <span class="button-tag">PRODUTOS</span></q-btn
+                    <span class="button-tag">{{ $t('searchProduct.btn_register_product') }}</span></q-btn
                   >
                 </div>
               </div>
@@ -92,16 +90,7 @@
           </div>
 
           <div class="q-mt-md col-10">
-            <q-table
-              flat
-              class="coisa"
-              :loading="loading"
-              :rows-per-page-options="[20]"
-              hide-pagination
-              :rows="dataProducts"
-              :columns="tableColumns"
-              row-key="id"
-            >
+            <q-table flat class="coisa" :loading="loading" :rows-per-page-options="[20]" hide-pagination :rows="dataProducts" :columns="tableColumns" row-key="id">
               <template v-slot:body="props">
                 <q-tr :props="props" @click="REDIRECT_PRODUCT(props.row.id)">
                   <q-td key="id" :props="props">

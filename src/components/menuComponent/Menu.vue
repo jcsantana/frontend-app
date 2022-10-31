@@ -21,14 +21,7 @@
           <q-item-label lines="1">{{ $t('menu.home') }}</q-item-label>
         </q-item-section>
       </q-item>
-      <q-expansion-item
-        v-for="item in Menu.links"
-        v-bind:key="item.title"
-        v-show="item.expanded"
-        :expand-icon-class="item.color"
-        :icon="item.icon"
-        :label="$t(item.title)"
-      >
+      <q-expansion-item v-for="item in Menu.links" v-bind:key="item.title" v-show="item.expanded" :expand-icon-class="item.color" :icon="item.icon" :label="$t(item.title)">
         <q-card :class="$q.dark.isActive ? 'bg-dark text-white' : 'bg-grey-2 text-black'">
           <q-item v-for="item2 in item.subMenu" v-bind:key="item2.title" :to="item2.to" active-class="my-menu-link" clickable>
             <q-item-section avatar>
@@ -54,22 +47,31 @@
           <q-item-label lines="1">{{ $t(item.title) }}</q-item-label>
         </q-item-section>
       </q-item>
+
+      <q-select filled v-model="locale" :options="localeOptions" label="Selecione outra lingua" emit-value map-options options-dense style="min-width: 150px" />
     </q-list>
   </div>
 </template>
 
 <script>
 import { Menu } from './menu'
+import { useI18n } from 'vue-i18n'
 export default {
   name: 'menuComponent',
   props: {
     color: null,
   },
   setup(props) {
+    const { locale } = useI18n({ useScope: 'global' })
     return {
       message: 'MENU APP',
       Menu,
       props,
+      locale,
+      localeOptions: [
+        { value: 'en-US', label: 'Ingles EUA' },
+        { value: 'pt-BR', label: 'Portugues do Brasil' },
+      ],
     }
   },
 }
